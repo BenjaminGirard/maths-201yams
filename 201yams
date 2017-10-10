@@ -1,0 +1,58 @@
+#!/usr/bin/env python3.5
+## main.py for  in /home/tetard/EPITECH_Y2/maths/201yams
+##
+## Made by benjamin girard
+## Login   <tetard@epitech.net>
+##
+## Started on  Mon Feb 13 15:24:41 2017 benjamin girard
+## Last update Mon Feb 13 23:14:16 2017 Renaud de Ganay
+##
+
+import sys
+import re
+
+from interface import launch_interface
+
+def             check_input():
+    if (len(sys.argv) - 1) == 6:
+        for num in sys.argv[1:6]:
+            if re.match("^[0-6]\Z$", num) == None:
+                return 84
+        if re.match("^((yams|four|pair|three)_[1-6]\Z)|((full)_([1-6]_[1-6])\Z)|((straight)_[5-6]\Z)$", sys.argv[6]) == None:
+            return 84
+
+    if (len(sys.argv) - 1) == 1 and sys.argv[1] == "-h":
+        print ("USAGE\n\t\t./201yams d1 d2 d3 d4 d5 c\n\nDESCRIPTION\n\t\td1\tvalue of the first die (0 if not thrown)\n\t\td2\tvalue of the second die (0 if not thrown)\n\t\td3\tvalue of the third die (0 if not thrown)\n\t\td4\tvalue of the fourth die (0 if not thrown)\n\t\td5\tvalue of the fifth die (0 if not thrown)\n\t\tc\texpected combination")
+        return 42
+    elif (len(sys.argv) - 1) != 6:
+        return 84
+    return 0
+
+def print_res(proba, comb_list):
+    action = {
+        "pair": "pair",
+        "three": "three-of-a-kind",
+        "four": "four-of-a-kind",
+        "full": "full of {nb}".format(nb=(0 if comb_list[0] != "full" else comb_list[2])),
+        "straight": "straight",
+        "yams": "yams"
+    }
+    print("chances to get a {nb} {action}: {proba}%".format(
+        nb=comb_list[1],
+        action=action[comb_list[0]],
+        proba=round((proba * 100), 2)
+    ))
+
+if __name__ == '__main__':
+    # check_err = check_input()
+    # if check_err == 84:
+    #     sys.exit(84)
+    # elif check_err == 42:
+    #     sys.exit(0)
+    # dice_list = [int(num) for num in sys.argv[1:6] if int(num) != 0]
+    # comb_list = sys.argv[6].split('_')
+    # proba = find_wanted_proba(dice_list, comb_list)
+    # if proba == 84:
+    #     sys.exit(84)
+    # print_res(proba, comb_list)
+    launch_interface()
